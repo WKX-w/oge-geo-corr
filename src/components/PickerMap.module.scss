@@ -1,0 +1,24 @@
+.picker-map {
+    cursor: crosshair;
+    :global(.leaflet-control-attribution) {
+        color: #0068b8;
+        font-size: 1rem;
+        font-weight: bold;
+        user-select: none;
+    }
+}
+
+.picker-map-loading {
+    cursor: wait;
+    background-color: rgb(211, 211, 211);
+    border: 1px solid gray;
+    color: #333;
+    font-weight: bold;
+    min-height: 0;
+
+    svg {
+        margin: 10px 0 0 0 !important;
+        width: 50%;
+        height: 30%;
+    }
+}

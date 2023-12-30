@@ -1,0 +1,94 @@
+.homo-points-table {
+    background-color: #ebebeb;
+    box-shadow: none;
+    min-height: 0;
+
+    .table {
+        border-collapse: separate;
+    }
+
+    .head {
+        position: sticky;
+        top: 0;
+        background-color: #d0dae0;
+    }
+
+    .table-header-cell {
+        border: 1px solid rgb(252, 252, 252);
+    }
+
+    .body-row {
+        &:hover .cell-delete svg {
+            opacity: 1;
+        }
+    }
+
+    %table-cell {
+        padding: 0;
+    }
+
+    %table-cell-content {
+        padding: 5px 15px;
+    }
+
+    %table-cell-content-coor {
+        @extend %table-cell-content;
+        transition: all 150ms ease-in-out;
+        border: 2px solid transparent;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    %table-cell-content-coor-hover {
+        background-color: #d0dae0;
+    }
+
+    %table-cell-content-coor-selected {
+        background-color: #d0dae0;
+        border-color: #6aa4d7;
+        cursor: auto;
+    }
+
+    .cell-id,
+    .cell-lat,
+    .cell-lng,
+    .cell-delete {
+        @extend %table-cell;
+    }
+
+    .cell-delete {
+        & > svg {
+            padding: 3px 0 1px 0;
+            color: rgb(174, 0, 0);
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity 200ms ease-in-out;
+        }
+    }
+
+    .cell-content-id {
+        @extend %table-cell-content;
+    }
+
+    .cell-content-lng {
+        @extend %table-cell-content-coor;
+        border-right: none;
+        &[data-hover="true"] {
+            @extend %table-cell-content-coor-hover;
+        }
+        &[data-selected="true"] {
+            @extend %table-cell-content-coor-selected;
+        }
+    }
+    .cell-content-lat {
+        @extend %table-cell-content-coor;
+        border-left: none;
+        &[data-hover="true"] {
+            @extend %table-cell-content-coor-hover;
+        }
+        &[data-selected="true"] {
+            @extend %table-cell-content-coor-selected;
+        }
+    }
+}

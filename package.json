@@ -1,0 +1,47 @@
+{
+  "name": "geo-corr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8000",
+    "build": "next build",
+    "start": "next start -p 8001",
+    "lint": "next lint",
+    "i18n:extract": "formatjs extract \"src/**/*.{js,tsx}\" --format simple --id-interpolation-pattern [sha512:contenthash:base64:10] --out-file src/i18n/locales/zh-CN.json",
+    "i18n:compile": "formatjs compile-folder --ast --format simple src/i18n/locales src/i18n/compiled",
+    "i18n": "npm run i18n:extract && npm run i18n:compile"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.13",
+    "@mui/x-data-grid": "^6.0.2",
+    "@types/node": "18.15.3",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "leaflet": "^1.9.3",
+    "lodash": "^4.17.21",
+    "next": "13.2.4",
+    "pg": "^8.10.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-intl": "^6.3.0",
+    "react-leaflet": "^4.2.1",
+    "sass": "^1.59.3",
+    "sharp": "^0.31.3",
+    "swr": "^2.1.2",
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@formatjs/cli": "^6.0.4",
+    "@svgr/webpack": "^7.0.0",
+    "@types/leaflet": "^1.9.3",
+    "@types/lodash": "^4.14.191",
+    "@types/pg": "^8.6.6",
+    "@types/seedrandom": "^3.0.5",
+    "babel-plugin-formatjs": "^10.4.0"
+  }
+}

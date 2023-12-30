@@ -1,0 +1,27 @@
+.data-source-table-toolbar {
+    @mixin toolbarBtn($color: inherit) {
+        color: $color;
+        opacity: 0.6;
+        transition: opacity 200ms ease-in-out;
+
+        cursor: not-allowed;
+
+        font-weight: bold;
+        svg {
+            font-size: 1.125rem;
+            margin-right: 6px;
+        }
+        span {
+            font-size: 0.8125rem;
+        }
+
+        &[data-enabled="true"] {
+            opacity: 1;
+            cursor: auto;
+        }
+    }
+
+    .delete-btn {
+        @include toolbarBtn(rgb(240, 76, 76));
+    }
+}

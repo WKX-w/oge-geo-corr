@@ -1,0 +1,37 @@
+.anno-svg-overlay {
+}
+
+.anno-text {
+    text-shadow: 0 0 3px #ffffff;
+    font-size: 1.125rem;
+    stroke: #000000;
+    stroke-width: 1.5px;
+    fill: rgb(255, 255, 255);
+    font-weight: bolder;
+}
+
+%polyline {
+    stroke-width: 2px;
+    cursor: crosshair;
+}
+
+.polyline-ver {
+    @extend %polyline;
+    stroke: #ffffff;
+    // filter: drop-shadow(1px 1px 8px rgb(0, 0, 0));
+}
+.polyline-hor {
+    @extend %polyline;
+    stroke: #ffffff;
+    // filter: drop-shadow(1px 1px 8px rgb(0, 0, 0));
+}
+.polyline-slash {
+    @extend %polyline;
+    stroke: #000;
+    // filter: drop-shadow(1px 1px 8px white);
+}
+.polyline-backslash {
+    @extend %polyline;
+    stroke: #000;
+    // filter: drop-shadow(1px 1px 8px white);
+}

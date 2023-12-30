@@ -1,0 +1,60 @@
+.layout {
+    padding: 60px 4vw 0 4vw;
+
+    height: 100vh;
+
+    .heading {
+        margin: 0;
+        font-weight: bold;
+        font-size: 2.25rem;
+    }
+
+    .breadcrumbs {
+        margin: 10px 0 15px 0;
+    }
+
+    .breadcrumbs-link {
+        color: #333;
+        font-size: 1rem;
+
+        &:visited {
+            color: inherit;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .breadcrumbs-current {
+        font-size: 1.375rem;
+        color: #333;
+    }
+
+    .subheading {
+        font-weight: 400;
+        font-size: 1.625rem;
+        color: #444;
+        margin-bottom: 80px;
+    }
+
+    .select-lang {
+        user-select: none;
+        position: absolute;
+        right: 4vw;
+        top: 70px;
+        width: 200px;
+        height: 30px;
+
+        & > svg {
+            font-size: 1.25rem;
+            color: #333;
+            margin-right: 20px;
+        }
+    }
+
+    .select {
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,26 @@
+//--------------------------------------------
+// *          Text Clamp Utilities           *
+//--------------------------------------------
+
+/**
+ *  Clamping text that has more than two lines.
+ */
+@mixin ClampLines($lines: 2) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+    overflow: hidden;
+}
+
+// Exceptionally, easier to keep text in a single line.
+.Line-clamp-1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@for $i from 2 through 10 {
+    .Line-clamp-#{$i} {
+        @include ClampLines($lines: $i);
+    }
+}

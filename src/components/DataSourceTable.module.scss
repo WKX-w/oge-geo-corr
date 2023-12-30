@@ -1,0 +1,92 @@
+.data-source-table {
+    width: 100%;
+    min-height: 300px;
+
+    .cell-raster-name {
+        & > div {
+            overflow-wrap: break-word;
+            text-overflow: ellipsis;
+            padding: 10px;
+        }
+    }
+
+    .table-row--checkbox {
+    }
+
+    .table-row--row-select {
+        border: 1px solid transparent;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:global(.Mui-selected) {
+            cursor: auto;
+            border-color: rgb(0, 128, 203);
+        }
+    }
+
+    @keyframes pending {
+        0% {
+            left: -100%;
+        }
+        100% {
+            left: 0%;
+        }
+    }
+
+    %row-overlay-pending {
+        position: relative;
+        overflow: hidden;
+        &::after {
+            content: "";
+            z-index: 9999;
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            left: -100%;
+            background: linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.15) 25%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.15) 75%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
+            animation: pending 3s linear infinite;
+        }
+    }
+
+    .table-row-status--pending {
+        pointer-events: none;
+        user-select: none;
+        * {
+            color: transparent !important;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+        }
+        @extend %row-overlay-pending;
+    }
+
+    %row-overlay-bar {
+        content: "";
+        position: absolute;
+        width: 5px;
+        left: 0;
+        top: 0;
+        height: 100%;
+    }
+    .table-row-status--available {
+        position: relative;
+        &::after {
+            @extend %row-overlay-bar;
+            background-color: rgb(97, 207, 0);
+        }
+    }
+    .table-row-status--no-data {
+        position: relative;
+        &::after {
+            @extend %row-overlay-bar;
+            background-color: red;
+        }
+    }
+}

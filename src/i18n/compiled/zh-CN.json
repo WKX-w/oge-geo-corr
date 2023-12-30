@@ -1,0 +1,296 @@
+{
+  "dataSource.alert.dataLenExceeded": [
+    {
+      "type": 0,
+      "value": "您链接了超过 "
+    },
+    {
+      "type": 1,
+      "value": "maxLen"
+    },
+    {
+      "type": 0,
+      "value": " 条数据源，超过部分已被舍弃。"
+    }
+  ],
+  "dataSource.footer.confirm": [
+    {
+      "type": 0,
+      "value": "确认选择"
+    }
+  ],
+  "dataSource.footer.hint.noDataSource": [
+    {
+      "type": 0,
+      "value": "当前没有可用数据源，请从OGE平台数据检索界面导入"
+    }
+  ],
+  "dataSource.footer.hint.noneSelected": [
+    {
+      "type": 0,
+      "value": "请选择存在合适配准影像的待校准影像"
+    }
+  ],
+  "dataSource.title": [
+    {
+      "type": 0,
+      "value": "几何校正：选择数据源"
+    }
+  ],
+  "dataSource.toOge": [
+    {
+      "type": 0,
+      "value": "前往OGE数据中心检索数据"
+    }
+  ],
+  "dataSourceTable.columns.cloudage": [
+    {
+      "type": 0,
+      "value": "云量"
+    }
+  ],
+  "dataSourceTable.columns.phenomTime": [
+    {
+      "type": 0,
+      "value": "成像时间"
+    }
+  ],
+  "dataSourceTable.columns.platformName": [
+    {
+      "type": 0,
+      "value": "卫星"
+    }
+  ],
+  "dataSourceTable.columns.productCategory": [
+    {
+      "type": 0,
+      "value": "产品类别"
+    }
+  ],
+  "dataSourceTable.columns.productName": [
+    {
+      "type": 0,
+      "value": "产品名称"
+    }
+  ],
+  "dataSourceTable.columns.rasterId": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "dataSourceTable.columns.rasterId.descrip": [
+    {
+      "type": 0,
+      "value": "影像的唯一标识符"
+    }
+  ],
+  "dataSourceTable.columns.rasterName": [
+    {
+      "type": 0,
+      "value": "影像编号"
+    }
+  ],
+  "dataSourceTable.columns.rasterName.descrip": [
+    {
+      "type": 0,
+      "value": "影像的格式化编号"
+    }
+  ],
+  "dataSourceTable.columns.sensorType": [
+    {
+      "type": 0,
+      "value": "传感器"
+    }
+  ],
+  "dataSourceTable.columns.sensorType.descrip": [
+    {
+      "type": 0,
+      "value": "成像所使用的传感器类型"
+    }
+  ],
+  "dataSourceTable.columns.thumbnail": [
+    {
+      "type": 0,
+      "value": "预览图"
+    }
+  ],
+  "dataSourceTable.columns.thumbnail.descrip": [
+    {
+      "type": 0,
+      "value": "影像数据的小样预览图"
+    }
+  ],
+  "dataSourceTableToolbar.delete": [
+    {
+      "type": 0,
+      "value": "删除选中数据"
+    }
+  ],
+  "home.descrip": [
+    {
+      "type": 0,
+      "value": "开放地球引擎几何校正功能，结合先进的影像配准算法通过手动或自动方式实现影像几何校正"
+    }
+  ],
+  "home.mode.auto": [
+    {
+      "type": 0,
+      "value": "自动几何校正"
+    }
+  ],
+  "home.mode.manual": [
+    {
+      "type": 0,
+      "value": "手动几何校正"
+    }
+  ],
+  "home.title": [
+    {
+      "type": 0,
+      "value": "欢迎使用开放地球引擎几何校正"
+    }
+  ],
+  "homoPointsTable.head.coorOnOriImg": [
+    {
+      "type": 0,
+      "value": "待配准影像坐标"
+    }
+  ],
+  "homoPointsTable.head.coorOnRefImg": [
+    {
+      "type": 0,
+      "value": "参考影像坐标"
+    }
+  ],
+  "homoPointsTable.head.id": [
+    {
+      "type": 0,
+      "value": "序号"
+    }
+  ],
+  "homoPointsTable.head.latitude": [
+    {
+      "type": 0,
+      "value": "纬度"
+    }
+  ],
+  "homoPointsTable.head.longitude": [
+    {
+      "type": 0,
+      "value": "经度"
+    }
+  ],
+  "layout.checkers.fallback": [
+    {
+      "type": 0,
+      "value": "无法执行当前几何纠正步骤，正在返回首页"
+    }
+  ],
+  "layout.checkers.noSelectedIds": [
+    {
+      "type": 0,
+      "value": "未选择任何影像"
+    }
+  ],
+  "layout.heading": [
+    {
+      "type": 0,
+      "value": "开放地球引擎几何校正"
+    }
+  ],
+  "layout.mode.auto.linkSource": [
+    {
+      "type": 0,
+      "value": "链接数据源"
+    }
+  ],
+  "layout.mode.auto.selectMode": [
+    {
+      "type": 0,
+      "value": "选择校正模式"
+    }
+  ],
+  "layout.mode.default.selectMode": [
+    {
+      "type": 0,
+      "value": "选择校正模式"
+    }
+  ],
+  "layout.mode.manual.linkSource": [
+    {
+      "type": 0,
+      "value": "链接数据源"
+    }
+  ],
+  "layout.mode.manual.pickHomoPoints": [
+    {
+      "type": 0,
+      "value": "匹配同名点"
+    }
+  ],
+  "layout.mode.manual.selectMode": [
+    {
+      "type": 0,
+      "value": "选择校正模式"
+    }
+  ],
+  "picker.error.dataSource": [
+    {
+      "type": 0,
+      "value": "链接数据源时出错，正在返回上一步"
+    }
+  ],
+  "picker.pickerMap.oriImg": [
+    {
+      "type": 0,
+      "value": "待配准影像"
+    }
+  ],
+  "picker.pickerMap.refImg": [
+    {
+      "type": 0,
+      "value": "参考影像"
+    }
+  ],
+  "picker.tables.showDataSourceTable": [
+    {
+      "type": 0,
+      "value": "待配准影像列表"
+    }
+  ],
+  "picker.title": [
+    {
+      "type": 0,
+      "value": "几何校正：匹配同名点"
+    }
+  ],
+  "pickerToolbox.addPoint": [
+    {
+      "type": 0,
+      "value": "新增一个同名点并设为当前编辑的同名点"
+    }
+  ],
+  "pickerToolbox.currentPoint": [
+    {
+      "type": 0,
+      "value": "当前同名点 "
+    },
+    {
+      "type": 1,
+      "value": "currentPoint"
+    }
+  ],
+  "pickerToolbox.fullscreen": [
+    {
+      "type": 0,
+      "value": "扩展影像视图"
+    }
+  ],
+  "pickerToolbox.link": [
+    {
+      "type": 0,
+      "value": "链接两幅视图当前的坐标位置"
+    }
+  ]
+}

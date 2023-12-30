@@ -1,0 +1,19 @@
+.task-operation {
+    padding: 0 15px;
+}
+
+%btn {
+    width: 120px;
+    font-size: 0.8rem;
+}
+
+.band-btn {
+    @extend %btn;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.down-all-bands-btn {
+    @extend %btn;
+    width: 120px;
+}
