@@ -344,8 +344,10 @@ const Picker = ({ rawSelectedRasterMeta }: PickerPageProps): JSX.Element => {
                 />
                 <PickerMap
                     className={`${styles["picker-map"]} ${styles["picker-ref-img"]}`}
-                    showLoading={tileSources.right.loading}
-                    tileSource={tileSources.right.url}
+                    // showLoading={tileSources.right.loading}
+                    showLoading={false}
+                    // tileSource={tileSources.right.url}
+                    tileSource={undefined}
                     zoom={viewport.zoom}
                     center={viewport.center}
                     points={rightPoints}

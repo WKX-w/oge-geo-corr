@@ -16,18 +16,18 @@ import { DataSourceTable, Layout } from "@/components";
 import Head from "next/head";
 import { Alert, Button, Snackbar } from "@mui/material";
 import IconArrowRight from "@mui/icons-material/ArrowRight";
-import IconInfo from "@mui/icons-material/InfoOutlined";
+// import IconInfo from "@mui/icons-material/InfoOutlined";
 
 // Interfaces
 import { GetServerSideProps } from "next";
 import { Certain } from "@/types/utils";
-import { RawDataSource } from "@/types/";
+import { DataSourceStatus, RawDataSource } from "@/types/";
 
 // Stylesheet
 import styles from "./DataSource.module.scss";
-import { validateState } from "../pageData/DataSource.data";
+// import { validateState } from "../pageData/DataSource.data";
 import { parseRawRasterMeta } from "@/utils";
-import { useTileSource, useTileSourceValidation } from "@/hooks/tileSource";
+// import { useTileSource, useTileSourceValidation } from "@/hooks/tileSource";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const rawState = Workflow.parseQuery(context.query);
@@ -78,7 +78,7 @@ export const DataSourcePage = ({
     const handleLinkToOge = useCallback(() => {
         location.href = `http://${
             process.env.NEXT_PUBLIC_OGE_HOST
-        }/resource/eoResourceRetrieval?from=${encodeURIComponent(document.URL)}`;
+        }/advancedRetrieval?type=dataset&from=${encodeURIComponent(document.URL)}`;
     }, []);
 
     const handleDataChange = useCallback<Certain<DataSourceTable.Props<"data">["onDataChange"]>>(
@@ -111,22 +111,22 @@ export const DataSourcePage = ({
     }, [workflowState, push, playSlideOut]);
 
     // Used on "manual" correction mode
-    const { rasterMetaStatuses, pending } = useTileSourceValidation(
-        workflowState.mode === "manual" ? rawRasterMeta : undefined,
-        1000
-    );
+    // const { rasterMetaStatuses, pending } = useTileSourceValidation(
+    //     workflowState.mode === "manual" ? rawRasterMeta : undefined,
+    //     1000
+    // );
 
     // Used on "auto" correction mode
     const rasterMeta = useMemo(() => {
-        if (workflowState.mode === "auto")
-            return rawRasterMeta.map((elem) => parseRawRasterMeta(elem));
-        return [];
+        // if (workflowState.mode === "auto")
+        return rawRasterMeta.map((elem) => {return {...parseRawRasterMeta(elem), pending: false, available: true} as DataSourceStatus});
+        // return [];
     }, [workflowState.mode, rawRasterMeta]);
 
-    const { message, canGoNext } = useMemo(
-        () => validateState(workflowState, pending),
-        [workflowState, pending]
-    );
+    // const { message, canGoNext } = useMemo(
+    //     () => validateState(workflowState, pending),
+    //     [workflowState, pending]
+    // );
 
     return (
         <Layout currentStep="LinkDataSource" className={`${styles["data-source"]} `}>
@@ -156,21 +156,22 @@ export const DataSourcePage = ({
                     toolbar={true}
                     selectionMode="checkbox"
                     className={`${styles["data-table"]} `}
-                    data={workflowState.mode === "manual" ? rasterMetaStatuses : rasterMeta}
+                    // data={workflowState.mode === "manual" ? rasterMetaStatuses : rasterMeta}
+                    data={rasterMeta}
                     selectedData={workflowState.selectedIds}
                     onDataChange={handleDataChange}
                     onSelectionChange={handleSelectionChange}
                 />
                 <div className={`${styles["footer"]} Flex-end-end`}>
-                    {canGoNext === false ? (
+                    {/* {canGoNext === false ? (
                         <p className={`Flex-center`}>
                             <IconInfo />
                             <span>{message}</span>
                         </p>
-                    ) : null}
+                    ) : null} */}
                     <Button
-                        variant={canGoNext ? "contained" : "outlined"}
-                        data-enabled={canGoNext}
+                        // variant={canGoNext ? "contained" : "outlined"}
+                        // data-enabled={canGoNext}
                         onClick={handleConfirmSelection}
                     >
                         <FormattedMessage

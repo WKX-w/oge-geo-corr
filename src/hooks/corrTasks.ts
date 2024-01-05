@@ -111,7 +111,7 @@ export function useCorrTasks(
         const timer = setInterval(async () => {
             if (mode === "auto") {
                 if (pendingCountRef.current === 0) return;
-
+                
                 const { result: batchResult, status } = await autoCorrTaskFetcher(tasks);
                 if (status !== "running") setPendingCount(0);
 

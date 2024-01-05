@@ -21,9 +21,14 @@ export async function getRasterMetadataByImageId(ids: number[]): Promise<RawData
 
     const sql = `
         WITH subset AS ( 
-            SELECT *
+            SELECT 
+                oge_image.*,
+                oge_image_thumb.image_id AS "thumb_image_id",
+                thumb
             FROM oge_image
-            WHERE image_id
+            INNER JOIN oge_image_thumb
+            ON         oge_image.image_id = oge_image_thumb.image_id
+            WHERE oge_image.image_id
             IN (${Array(ids.length)
                 .fill(0)
                 .map((_, idx) => `$${idx + 1}`)
