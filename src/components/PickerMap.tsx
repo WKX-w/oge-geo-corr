@@ -65,13 +65,18 @@ export const PickerMap = ({
             center={center}
             {...otherProps}
         >
-            {baseMap ? (
+            {/* {baseMap ? (
                 <TileLayer 
                     url="http://t{s}.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles&tk=8c471ad83d563e443d9a630de25f23a0"
                     subdomains={['0', '1', '2', '3', '4', '5', '6', '7']}
                  />
-            ) : null}
-            {tileSource ? <TileLayer url={tileSource} /> : null}
+            ) : null} */}
+            {tileSource ? 
+                <TileLayer url={tileSource} /> : 
+                <TileLayer 
+                    url="http://t{s}.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles&tk=8c471ad83d563e443d9a630de25f23a0"
+                    subdomains={['0', '1', '2', '3', '4', '5', '6', '7']}
+                 />}
             <PickedPoints points={points} />
             <MapAttribute attribName={attribName} />
             <MapResizeTrigger trigger={resizeTrigger} />
