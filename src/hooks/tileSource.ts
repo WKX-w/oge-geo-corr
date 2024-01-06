@@ -74,16 +74,18 @@ export function useTileSource(raster: DataSource, pollingInterval?: number, onFa
         if (!rasterId) return;
         oriImgTileSourceJobFetcher(rasterId).then((data) => {
             jobId = data.jobID;
-            console.log(jobId)
-            const timer = setInterval(() => {
-                oriImgTileSourceFetcher(jobId).then((data) => {
-                    setLeftImgTileSource(data);
-                    if (data.status !== "running") {
-                        clearInterval(timer);
-                    }
+            setTimeout(() => {
+                const timer = setInterval(() => {
+                    oriImgTileSourceFetcher(jobId).then((data) => {
+                        setLeftImgTileSource(data);
+                        if (data.status !== "running") {
+                            clearInterval(timer);
+                        }
 
-                });
-            }, interval);
+                    });
+                }, interval);
+            }, 500);
+
         })
     }, [rasterId])
 
