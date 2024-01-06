@@ -24,7 +24,7 @@ export type AutoCorrTaskResponse = {
     };
 };
 
-const manualCorrTaskFetcher = async (raster: DataSource): Promise<ManualCorrTaskResponse> => {
+const manualCorrTaskJobFetcher = async (raster: DataSource): Promise<any> => {
     CorrDataState.initStorage(localStorage);
     const corrPoints = new CorrDataState()[raster.rasterId];
     if (corrPoints.length < MIN_CORR_POINTS)
@@ -43,7 +43,7 @@ const manualCorrTaskFetcher = async (raster: DataSource): Promise<ManualCorrTask
 
     return (
         await fetch(
-            `${SERVICE_PREFIX}/oge-model-service/api/correction/handcorrector/${raster.rasterId}`,
+            `${SERVICE_PREFIX}/oge-model-service/api/correction/handCorrector/${raster.rasterId}/execute`,
             {
                 method: "POST",
                 headers: {
@@ -60,9 +60,17 @@ const manualCorrTaskFetcher = async (raster: DataSource): Promise<ManualCorrTask
     ).json();
 };
 
-const autoCorrTaskFetcher = async (rasters: DataSource[]): Promise<AutoCorrTaskResponse> => {
+const manualCorrTaskFetcher = async (jobId: string) => {
     return (
-        await fetch(`${SERVICE_PREFIX}/oge-model-service/api/correction/batch`, {
+        await fetch(
+            `${SERVICE_PREFIX}/oge-model-service/api/correction/handCorrector/${jobId}`
+        )
+    ).json();
+}
+
+const autoCorrTaskJobFetcher = async (rasters: DataSource[]): Promise<any> => {
+    return (
+        await fetch(`${SERVICE_PREFIX}/oge-model-service/api/correction/batchWithMap/execute`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,6 +79,12 @@ const autoCorrTaskFetcher = async (rasters: DataSource[]): Promise<AutoCorrTaskR
         })
     ).json();
 };
+
+const autoCorrTaskFetcher = async (jobId: string) => {
+    return (
+        await fetch(`${SERVICE_PREFIX}/oge-model-service/api/correction/batchWithMap/${jobId}`)
+    ).json();
+}
 
 export type CorrTasksError = undefined | "NotEnoughPoints";
 
@@ -107,24 +121,36 @@ export function useCorrTasks(
         return { tasks, taskIdMap, pendingStatuses };
     }, [rawSources, mode]);
 
+
+
     useEffect(() => {
+        let jobId = "";
         const timer = setInterval(async () => {
+            console.log(mode === "manual",
+                pendingStatuses.length,
+                pendingCountRef.current)
+            // if (jobId) return;
             if (mode === "auto") {
                 if (pendingCountRef.current === 0) return;
-                
-                const { result: batchResult, status } = await autoCorrTaskFetcher(tasks);
+                if (!jobId) {
+                    jobId = (await autoCorrTaskJobFetcher(tasks)).jobID;
+                }
+
+                const { result: batchResult, status } = await autoCorrTaskFetcher(jobId);
                 if (status !== "running") setPendingCount(0);
 
                 if (status === "failed") {
                     tasks.forEach((elem) => {
                         elem.status = "failed";
                     });
+                    jobId = "";
                 } else if (status === "successful") {
                     for (const rasterIdKey in batchResult) {
                         const task = tasks[taskIdMap.get(Number(rasterIdKey)) as number];
                         task.result = batchResult[rasterIdKey];
                         task.status = "success";
                     }
+                    jobId = "";
                 }
             } else if (
                 mode === "manual" &&
@@ -132,17 +158,17 @@ export function useCorrTasks(
                 pendingCountRef.current > 0
             ) {
                 const idx = tasks.length - pendingCountRef.current;
-
                 if (pendingStatuses[idx] === false) return;
-
                 const task = tasks[idx];
 
-                let manualCorrTaskRes: ManualCorrTaskResponse | undefined = undefined;
-                try {
-                    manualCorrTaskRes = await manualCorrTaskFetcher(task);
-                } catch {
-                    setErrorState("NotEnoughPoints");
+                if (!jobId) {
+                    jobId = (await manualCorrTaskJobFetcher(task)).jobID;
                 }
+
+                let manualCorrTaskRes: ManualCorrTaskResponse | undefined = undefined;
+
+                manualCorrTaskRes = await manualCorrTaskFetcher(jobId);
+
 
                 if (manualCorrTaskRes) {
                     const { result, status } = manualCorrTaskRes;
@@ -150,6 +176,7 @@ export function useCorrTasks(
                     if (status !== "running") {
                         pendingStatuses[idx] = false;
                         setPendingCount((state) => state - 1);
+                        jobId = "";
                     }
 
                     if (status === "failed") {

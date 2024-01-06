@@ -46,14 +46,14 @@ function DataSourceTableRender<T extends DataSourceTable.DataSourceTableMode = "
     const intl = useIntl();
 
     const handleDownloadBand = useCallback((data: CorrentionTaskBandResult) => {
-        window.open(data.url);
+        window.open(data.url.replace("http://125.220.153.22:8027", "http://oge.whu.edu.cn/corr-data"));
     }, []);
 
     const handleDownloadAllBands = useCallback(async (data: CorrentionTaskBandResult[]) => {
         const down = async (url: string) => {
             return new Promise(() => {
                 setTimeout(() => {
-                    window.open(url);
+                    window.open(url.replace("http://125.220.153.22:8027", "http://oge.whu.edu.cn/corr-data"));
                 }, 300);
             });
         };
