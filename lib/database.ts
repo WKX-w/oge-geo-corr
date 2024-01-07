@@ -7,7 +7,7 @@ const pool = new Pool({
     password: "ypfamily608",
     database: "oge",
     max: 20,
-    idleTimeoutMillis: 30000,
+    idleTimeoutMillis: 0,
 });
 
 process.on('exit', () => {
