@@ -1,13 +1,18 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
-const client = new Client({
+const pool = new Pool({
     host: "120.48.44.57",
     port: 3306,
     user: "oge",
     password: "ypfamily608",
     database: "oge",
+    max: 20,
+    idleTimeoutMillis: 30000,
 });
 
-client.connect();
+process.on('exit', () => {
+    console.log("[Server]: exit application");
+    pool.end();
+})
 
-export { client };
+export { pool };

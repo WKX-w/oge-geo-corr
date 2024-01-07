@@ -1,5 +1,5 @@
 import { RawDataSource } from "@/types";
-import { client } from "./database";
+import { pool } from "./database";
 
 const cachedQueries: Map<number[], RawDataSource[]> = new Map();
 
@@ -30,9 +30,9 @@ export async function getRasterMetadataByImageId(ids: number[]): Promise<RawData
             ON         oge_image.image_id = oge_image_thumb.image_id
             WHERE oge_image.image_id
             IN (${Array(ids.length)
-                .fill(0)
-                .map((_, idx) => `$${idx + 1}`)
-                .join(",")}) 
+            .fill(0)
+            .map((_, idx) => `$${idx + 1}`)
+            .join(",")}) 
         )
         SELECT  
             image_id AS "rasterId",
@@ -56,7 +56,7 @@ export async function getRasterMetadataByImageId(ids: number[]): Promise<RawData
         ON          oge_data_resource_product.sensor_key = oge_sensor.sensor_key;
         `;
 
-    const res = await client.query(sql, ids);
+    const res = await pool.query(sql, ids);
 
     cachedKeys[lastKeyIndex] = ids;
     cachedQueries.set(ids, res.rows);
