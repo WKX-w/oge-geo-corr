@@ -99,6 +99,12 @@ const Picker = ({ rawSelectedRasterMeta }: PickerPageProps): JSX.Element => {
                 console.log("Datasource WMTS URL request failed");
                 setShowErrorAlert(true);
             });
+        },
+        () => {
+            requestIdleCallback(() => {
+                console.log("Datasource WMTS URL request waiting");
+                setShowErrorAlert(true);
+            });
         }
     );
 

@@ -70,7 +70,7 @@ const manualCorrTaskFetcher = async (jobId: string) => {
 
 const autoCorrTaskJobFetcher = async (rasters: DataSource[]): Promise<any> => {
     return (
-        await fetch(`${SERVICE_PREFIX}/oge-model-service/api/correction/batchWithMap/execute`, {
+        await fetch(`${SERVICE_PREFIX}/oge-model-service/api/correction/batchWithDOM/execute`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

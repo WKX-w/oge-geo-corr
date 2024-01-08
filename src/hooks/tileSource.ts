@@ -8,7 +8,7 @@ export type TileSourceResponse = {
     result: {
         url: string;
     } | null;
-    status: "successful" | "running" | "failed";
+    status: "successful" | "running" | "failed" | "dismiss" | "waiting";
 };
 
 export const oriImgTileSourceJobFetcher = async (rasterId: number) => {
@@ -48,10 +48,10 @@ export const refImgTileSourceFetcher = async (
 };
 
 // Handle the logic of polling for tile sources
-export function useTileSource(raster: DataSource, pollingInterval?: number, onFailed?: () => void) {
+export function useTileSource(raster: DataSource, pollingInterval?: number, onFailed?: () => void, onWaiting?: () => void) {
     const sourceLoadedRef = useRef({ left: false, right: false });
 
-    const paramsRef = useRef({ raster, failed: false });
+    const paramsRef = useRef({ raster, failed: false, waiting: false, });
 
     if (raster !== paramsRef.current.raster) {
         sourceLoadedRef.current = { left: false, right: false };
@@ -122,6 +122,14 @@ export function useTileSource(raster: DataSource, pollingInterval?: number, onFa
     ) {
         if (onFailed) onFailed();
         paramsRef.current.failed = true;
+    }
+
+    if (
+        paramsRef.current.waiting === false &&
+        (leftImgTileSource?.status === "waiting")
+    ) {
+        if (onWaiting) onWaiting();
+        paramsRef.current.waiting = true;
     }
 
     return {
