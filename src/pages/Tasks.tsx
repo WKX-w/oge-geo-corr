@@ -26,9 +26,11 @@ import { FormattedMessage } from "react-intl";
 export const getServerSideProps = renderSelectedRasters;
 
 export const TasksPage = ({ rawSelectedRasterMeta }: SSRProps.SelectedRasters): JSX.Element => {
-    const { push } = useRouter();
+    const router = useRouter();
 
     const { updateWorkflowState, workflowState } = useContext(workflowCtx);
+
+    const [errorMessage, setErrorMessage] = useState("");
 
     const mainRef = useRef<HTMLDivElement>(null);
 
@@ -49,12 +51,17 @@ export const TasksPage = ({ rawSelectedRasterMeta }: SSRProps.SelectedRasters): 
     const [showErrorAlert, setShowErrorAlert] = useState(false);
 
     const handleErrorAlertClose = useCallback(() => {
-        if (error === "NotEnoughPoints")
-            push({ pathname: "/Picker", query: Workflow.stringify(workflowState) });
-    }, [push, workflowState, error]);
+        if (error === "NotEnoughPoints") {
+            router.push({ pathname: "/Picker", query: Workflow.stringify(workflowState) });
+        } else if (error === "Waiting") {
+            router.back();
+        }
+    }, [router, workflowState, error]);
 
     useEffect(() => {
         if (error) setShowErrorAlert(true);
+        if (error === "NotEnoughPoints") setErrorMessage("同名点数量不足，正在返回上一步");
+        else if (error === "Waiting") setErrorMessage("当前任务队列已满，请稍后提交处理请求");
     }, [error]);
 
     return (
@@ -78,8 +85,8 @@ export const TasksPage = ({ rawSelectedRasterMeta }: SSRProps.SelectedRasters): 
             >
                 <Alert severity="error">
                     <FormattedMessage
-                        id="tasks.error.notEnoughPoints"
-                        defaultMessage="同名点数量不足，正在返回上一步"
+                        id="tasks.error"
+                        defaultMessage={errorMessage}
                     />
                 </Alert>
             </Snackbar>

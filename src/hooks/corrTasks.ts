@@ -86,7 +86,7 @@ const autoCorrTaskFetcher = async (jobId: string) => {
     ).json();
 }
 
-export type CorrTasksError = undefined | "NotEnoughPoints";
+export type CorrTasksError = undefined | "NotEnoughPoints" | "Waiting";
 
 export function useCorrTasks(
     rawSources: RawDataSource[],
@@ -124,7 +124,8 @@ export function useCorrTasks(
 
 
     useEffect(() => {
-        let jobId = "";
+        let jobId = "", executed = false;
+
         const timer = setInterval(async () => {
             console.log(mode === "manual",
                 pendingStatuses.length,
@@ -132,9 +133,18 @@ export function useCorrTasks(
             // if (jobId) return;
             if (mode === "auto") {
                 if (pendingCountRef.current === 0) return;
-                if (!jobId) {
-                    jobId = (await autoCorrTaskJobFetcher(tasks)).jobID;
+                if (!jobId && !executed) {
+                    executed = true;
+                    const corrData = (await autoCorrTaskJobFetcher(tasks));
+                    jobId = corrData.jobID;
+                    const status = corrData.status;
+                    if (status === "waiting") {
+                        setErrorState("Waiting");
+                        clearInterval(timer);
+                        return;
+                    }
                 }
+                if (!jobId) return;
 
                 const { result: batchResult, status } = await autoCorrTaskFetcher(jobId);
                 if (status !== "running") setPendingCount(0);
@@ -161,9 +171,18 @@ export function useCorrTasks(
                 if (pendingStatuses[idx] === false) return;
                 const task = tasks[idx];
 
-                if (!jobId) {
-                    jobId = (await manualCorrTaskJobFetcher(task)).jobID;
+                if (!jobId && !executed) {
+                    executed = true;
+                    const corrData = (await autoCorrTaskJobFetcher(tasks));
+                    jobId = corrData.jobID;
+                    const status = corrData.status;
+                    if (status === "waiting") {
+                        setErrorState("Waiting");
+                        clearInterval(timer);
+                        return;
+                    }
                 }
+                if (!jobId) return;
 
                 let manualCorrTaskRes: ManualCorrTaskResponse | undefined = undefined;
 
@@ -174,9 +193,10 @@ export function useCorrTasks(
                     const { result, status } = manualCorrTaskRes;
 
                     if (status !== "running") {
+                        jobId = "";
                         pendingStatuses[idx] = false;
                         setPendingCount((state) => state - 1);
-                        jobId = "";
+                        executed = false;
                     }
 
                     if (status === "failed") {

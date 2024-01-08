@@ -124,14 +124,6 @@ export function useTileSource(raster: DataSource, pollingInterval?: number, onFa
         paramsRef.current.failed = true;
     }
 
-    if (
-        paramsRef.current.waiting === false &&
-        (leftImgTileSource?.status === "waiting")
-    ) {
-        if (onWaiting) onWaiting();
-        paramsRef.current.waiting = true;
-    }
-
     return {
         tileSources: {
             left: { loading: !sourceLoadedRef.current.left, url: leftImgTileSource?.result?.url.replace("http://125.220.153.22:8093", "http://oge.whu.edu.cn/corr-wmts") },

@@ -100,12 +100,6 @@ const Picker = ({ rawSelectedRasterMeta }: PickerPageProps): JSX.Element => {
                 setShowErrorAlert(true);
             });
         },
-        () => {
-            requestIdleCallback(() => {
-                console.log("Datasource WMTS URL request waiting");
-                setShowErrorAlert(true);
-            });
-        }
     );
 
     const handleCurrentImageChange = useCallback<
