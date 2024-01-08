@@ -76,9 +76,11 @@ export const DataSourcePage = ({
     }, [lengthExceeded]);
 
     const handleLinkToOge = useCallback(() => {
+        const fromUrl = new URL(document.URL);
+        const mode = fromUrl.searchParams.get("mode");
         location.href = `http://${
             process.env.NEXT_PUBLIC_OGE_HOST
-        }/advancedRetrieval?type=dataset&from=${encodeURIComponent(document.URL)}`;
+        }/advancedRetrieval?type=dataset&from=${encodeURIComponent(`${fromUrl.protocol}//${fromUrl.host}${fromUrl.pathname}?mode=${mode}`)}`;
     }, []);
 
     const handleDataChange = useCallback<Certain<DataSourceTable.Props<"data">["onDataChange"]>>(
