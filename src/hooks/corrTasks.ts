@@ -173,7 +173,7 @@ export function useCorrTasks(
 
                 if (!jobId && !executed) {
                     executed = true;
-                    const corrData = (await autoCorrTaskJobFetcher(tasks));
+                    const corrData = (await manualCorrTaskJobFetcher(task));
                     jobId = corrData.jobID;
                     const status = corrData.status;
                     if (status === "waiting") {
